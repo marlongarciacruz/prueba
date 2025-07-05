@@ -1,0 +1,50 @@
+create database delivery_bd;
+use delivery_bd;
+
+
+CREATE TABLE Usuarios(
+     ID INT PRIMARY KEY AUTO_INCREMENT,
+     Nombre VARCHAR(100) NOT NULL,
+     Email VARCHAR(100) UNIQUE NOT NULL,
+	 Telefono VARCHAR(20),
+     Direccion VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE Restaurantes(
+     ID INT PRIMARY KEY AUTO_INCREMENT,
+     Nombre VARCHAR(100) NOT NULL,
+     Direccion VARCHAR(255) NOT NULL UNIQUE,
+	 Telefono VARCHAR(20) NOT NULL
+);
+
+
+create table pedidos(
+id INT  primary key auto_increment,
+usuario_id int not null,restaurante_id int not null,
+fecha timestamp default current_timestamp,
+estado varchar (50) default'pendiente',
+foreign key (usuario_id) references usuarios (id),
+foreign key (restaurante_id) references restaurantes (id)
+);
+
+
+CREATE TABLE Detalles_Pedido(
+    ID INT PRIMARY KEY AUTO_INCREMENT, 
+    Usuario_id INT NOT NULL,
+    Producto_id INT NOT NULL,
+    Cantidad INT NOT NULL,
+    Precio_unitario DECIMAL(10, 2) NOT NULL,
+    FOREIGN KEY (usuario_id) REFERENCES Pedidos(id),
+    FOREIGN KEY (producto_id) REFERENCES Productos(id)
+);
+
+
+CREATE TABLE Productos(
+    ID INT PRIMARY KEY AUTO_INCREMENT,
+    Restaurante_id INT,
+    Nombre VARCHAR(100) NOT NULL,
+    Descripcion TEXT,
+    Precio DECIMAL(10, 2) NOT NULL,
+    FOREIGN KEY (Restaurante_id) REFERENCES Restaurantes(ID)
+);
+
